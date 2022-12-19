@@ -69,19 +69,18 @@ class CloudflareAuth(AuthBase):
     """
     Cloudflare Custom Authentication.
 
-    Attaches a Cloudflare X-Auth-Email/Key authentication scheme to the given
+    Attaches a Cloudflare bearer token authentication scheme to the given
     Request object.
     """
 
     def __init__(self, email, auth_key):
-        """Email and auth_key are required."""
+        """Auth_key (bearer token) is required."""
         self.email = email
         self.auth_key = auth_key
 
     def __call__(self, r):
         """Implement AuthBase."""
-        r.headers['X-Auth-Email'] = self.email
-        r.headers['X-Auth-Key'] = self.auth_key
+        r.headers['Authorization'] = 'Bearer ' + self.auth_key
         return r
 
 
